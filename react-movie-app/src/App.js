@@ -40,7 +40,7 @@ const SearchIcon = styled.img`
   width: 32px;
   height: 32px;
 `;
-const MovieImage = styled.img`
+const MovieLogo = styled.img`
   width: 48px;
   height: 48px;
   margin: 15px;
@@ -61,19 +61,12 @@ const MovieListContainer = styled.div`
   gap: 25px;
   justify-content: space-evenly;;
 `;
-const Placeholder = styled.img`
-  width: 120px;
-  height: 120px;
-  margin: 150px;
-  opacity: 50%;
-`;
+
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
-
   const [movieList, setMovieList] = useState([]);
-  const [selectedMovie, onMovieSelect] = useState();
-
+  const [selectedMovie, setSelectedMovie] = useState("");
   const [timeoutId, setTimeoutId] = useState();
 
   const fetchData = async (searchString) => {
@@ -84,17 +77,17 @@ function App() {
   };
 
   const onTextChange = (e) => {
-    onMovieSelect("")
+    setSelectedMovie("")
     clearTimeout(timeoutId);
     setSearchQuery(e.target.value);
-    const timeout = setTimeout(() => fetchData(e.target.value), 500);
+    const timeout = setTimeout(() => fetchData(e.target.value), 300);
     setTimeoutId(timeout);
   };
   return (
     <Container>
       <Header>
         <AppName>
-          <MovieImage src="/react-movie-app/movie-icon.svg" />
+          <MovieLogo src="/react-movie-app/movie-icon.svg" />
           React Movie App
         </AppName>
         <SearchBox>
@@ -106,14 +99,14 @@ function App() {
           />
         </SearchBox>
       </Header>
-      {selectedMovie && <MovieInfoComponent selectedMovie={selectedMovie} onMovieSelect={onMovieSelect}/>}
+      {selectedMovie && <MovieInfoComponent selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie}/>}
       <MovieListContainer>
         {movieList?.length ? (
           movieList.map((movie, index) => (
             <MovieComponent
               key={index}
               movie={movie}
-              onMovieSelect={onMovieSelect}
+              setSelectedMovie={setSelectedMovie}
             />
           ))
         ) : (

@@ -42,7 +42,7 @@ const MovieComponent = (props) => {
   return (
     <MovieContainer
       onClick={() => {
-        props.onMovieSelect(imdbID);
+        props.setSelectedMovie(imdbID);
       }}
     >
       <CoverImage src={Poster} alt={Title} />
